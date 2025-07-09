@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
-import { fetchMovieRecommendations } from "@/utils/fetchMovieRecommendations";
+import { fetchTrendingMovies } from '@/utils/fetchTrendingMovies';
+
 import withAuth from "@/components/Auth/withAuth";
 
 function RecommendationsPage() {
@@ -11,7 +12,7 @@ function RecommendationsPage() {
 
   useEffect(() => {
     const fetch = async () => {
-      const data = await fetchMovieRecommendations();
+      const data = await fetchTrendingMovies()
       setMovies(data);
       setLoading(false);
     };
