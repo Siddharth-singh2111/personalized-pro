@@ -5,9 +5,10 @@ import { RootState } from "@/redux/store";
 import DashboardLayout from "@/components/Layout/DashboardLayout";
 import NewsCard from "@/components/Feed/NewsCard";
 import withAuth from "@/components/Auth/withAuth";
+import { Article } from "@/types"; // ✅ Import the shared type
 
 function FavoritesPage() {
-  const favorites = useSelector((state: RootState) => state.favorites.items);
+  const favorites: Article[] = useSelector((state: RootState) => state.favorites.items);
 
   return (
     <DashboardLayout>

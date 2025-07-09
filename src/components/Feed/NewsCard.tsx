@@ -5,13 +5,7 @@ import { addFavorite, removeFavorite } from "@/redux/slices/favoritesSlice";
 import { RootState } from "@/redux/store";
 import { Heart, HeartOff } from "lucide-react";
 import { motion } from "framer-motion";
-
-type Article = {
-  title: string;
-  description: string;
-  url: string;
-  urlToImage: string;
-};
+import { Article } from "@/types"; // ✅ Import from shared types
 
 export default function NewsCard({ article }: { article: Article }) {
   const dispatch = useDispatch();
@@ -30,7 +24,7 @@ export default function NewsCard({ article }: { article: Article }) {
     <motion.div
       layout
       drag="y"
-      className="bg-white border rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 p-4 cursor-grab active:cursor-grabbing"
+      className="bg-white dark:bg-gray-900 border rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 p-4 cursor-grab active:cursor-grabbing"
     >
       {article.urlToImage && (
         <img
@@ -40,8 +34,12 @@ export default function NewsCard({ article }: { article: Article }) {
         />
       )}
 
-      <h3 className="text-lg font-semibold text-gray-800 mb-1 line-clamp-2">{article.title}</h3>
-      <p className="text-sm text-gray-600 line-clamp-3">{article.description}</p>
+      <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-1 line-clamp-2">
+        {article.title}
+      </h3>
+      <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-3">
+        {article.description}
+      </p>
 
       <div className="mt-4 flex justify-between items-center">
         <a
@@ -53,7 +51,10 @@ export default function NewsCard({ article }: { article: Article }) {
           Read More →
         </a>
 
-        <button onClick={toggleFavorite} className="text-red-500 hover:scale-110 transition-transform duration-200">
+        <button
+          onClick={toggleFavorite}
+          className="text-red-500 hover:scale-110 transition-transform duration-200"
+        >
           {isFavorited ? <HeartOff size={18} /> : <Heart size={18} />}
         </button>
       </div>

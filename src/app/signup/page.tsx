@@ -11,14 +11,18 @@ export default function SignupPage() {
   const router = useRouter();
 
   const handleSignup = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      router.push('/feed');
-    } catch (err) {
+  e.preventDefault();
+  try {
+    await createUserWithEmailAndPassword(auth, email, password);
+    router.push('/feed');
+  } catch (err) {
+    if (err instanceof Error) {
       alert('Signup failed: ' + err.message);
+    } else {
+      alert('Signup failed: Unknown error');
     }
-  };
+  }
+};
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center px-4">

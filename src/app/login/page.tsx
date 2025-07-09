@@ -10,15 +10,19 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const router = useRouter();
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      router.push('/feed');
-    } catch (err) {
+const handleLogin = async (e: React.FormEvent) => {
+  e.preventDefault();
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    router.push('/feed');
+  } catch (err) {
+    if (err instanceof Error) {
       alert('Login failed: ' + err.message);
+    } else {
+      alert('Login failed: Unknown error');
     }
-  };
+  }
+};
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center px-4">

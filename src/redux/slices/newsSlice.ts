@@ -1,14 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import type { Article } from "@/types"; // adjust path if needed
 
-// Replace this with your real API key or load from env
 const API_KEY = process.env.NEXT_PUBLIC_NEWS_API_KEY;
 const BASE_URL = "https://newsapi.org/v2/top-headlines";
 
-export const getNews = createAsyncThunk(
+export const getNews = createAsyncThunk<Article[], void, { state: any }>(
   "news/getNews",
   async (_, { getState }) => {
-    const state: any = getState();
+    const state = getState();
     const categories: string[] = state.preferences.categories || [];
 
     const requests = categories.map((category) =>
@@ -22,19 +22,27 @@ export const getNews = createAsyncThunk(
     );
 
     const results = await Promise.all(requests);
-    const articles = results.flatMap((res) => res.data.articles);
+    const articles: Article[] = results.flatMap((res) => res.data.articles);
 
     return articles;
   }
 );
 
+interface NewsState {
+  articles: Article[];
+  loading: boolean;
+  error: string | null;
+}
+
+const initialState: NewsState = {
+  articles: [],
+  loading: false,
+  error: null,
+};
+
 const newsSlice = createSlice({
   name: "news",
-  initialState: {
-    articles: [],
-    loading: false,
-    error: null,
-  },
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
