@@ -1,7 +1,6 @@
 // src/app/social/post/[id]/page.tsx
 import { mockSocialPosts } from "@/data/mockSocialPosts";
 
-
 type Props = {
   params: {
     id: string;
