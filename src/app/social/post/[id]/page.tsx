@@ -1,9 +1,16 @@
 import { mockSocialPosts } from "@/data/mockSocialPosts";
+import { notFound } from "next/navigation";
 
-export default function SocialPostDetail({ params }: { params: { id: string } }) {
+interface SocialPostDetailProps {
+  params: {
+    id: string;
+  };
+}
+
+export default function SocialPostDetail({ params }: SocialPostDetailProps) {
   const post = mockSocialPosts.find(p => p.id === Number(params.id));
 
-  if (!post) return <div className="text-red-500">Post not found.</div>;
+  if (!post) return notFound();
 
   return (
     <div className="bg-white p-6 rounded-xl shadow-lg max-w-xl mx-auto">
